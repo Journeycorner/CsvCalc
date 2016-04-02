@@ -11,6 +11,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
 
+import static sun.misc.Version.print;
+
 public class Main {
 
     private static String INPUT_FILE = "C:\\Users\\Florian Reisecker\\Downloads\\input.csv";
@@ -19,6 +21,15 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         readFile();
+        printResults();
+    }
+
+    private static void printResults() {
+        resultMap.keySet().stream()
+                .sorted()
+                .forEach(key -> {
+                    System.out.println(key + " : " + Math.round(resultMap.get(key)));
+                });
     }
 
     private static void readFile() throws IOException {
@@ -27,10 +38,9 @@ public class Main {
             {
                 String[] lineArray = line.split(";");
                 YearMonth yearMonth = YearMonth.from(LocalDate.parse(lineArray[3], DateTimeFormatter.ofPattern("dd.MM.yyyy")));
-                Double newValue = Double.valueOf(lineArray[4].replace(',','.'));
+                Double newValue = Double.valueOf(lineArray[4].replace(".","").replace(',','.'));
                 Double oldValue = resultMap.get(yearMonth);
-                resultMap.put(yearMonth, oldValue == null ? newValue : oldValue);
-                System.out.println(resultMap.get(yearMonth));
+                resultMap.put(yearMonth, oldValue == null ? newValue : oldValue + newValue);
             });
         }
     }
