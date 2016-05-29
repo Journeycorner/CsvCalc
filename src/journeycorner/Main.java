@@ -11,8 +11,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
 
-import static sun.misc.Version.print;
-
 public class Main {
 
     private static String INPUT_FILE = "C:\\Users\\Florian Reisecker\\Downloads\\input.csv";
@@ -21,15 +19,19 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         readFile();
-        printResults();
+        writeResults();
     }
 
-    private static void printResults() {
+    private static void writeResults() throws IOException {
+        StringBuffer stringBuffer = new StringBuffer();
         resultMap.keySet().stream()
                 .sorted()
                 .forEach(key -> {
-                    System.out.println(key + " : " + Math.round(resultMap.get(key)));
+                    String line = key + ";" + Math.round(resultMap.get(key)) + "\n";
+                    stringBuffer.append(line);
+                    System.out.print(line);
                 });
+        Files.write(Paths.get(OUTPUT_FILE), stringBuffer.toString().getBytes());
     }
 
     private static void readFile() throws IOException {
