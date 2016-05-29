@@ -36,7 +36,9 @@ public class Main {
 
     private static void readFile() throws IOException {
         try (Stream<String> stream = Files.lines(Paths.get(INPUT_FILE), Charset.forName("ISO-8859-1"))) {
-            stream.forEach(line ->
+            stream
+//                    .filter(line -> line.contains("foo") || line.contains("bar"))
+                    .forEach(line ->
             {
                 String[] lineArray = line.split(";");
                 YearMonth yearMonth = YearMonth.from(LocalDate.parse(lineArray[3], DateTimeFormatter.ofPattern("dd.MM.yyyy")));
