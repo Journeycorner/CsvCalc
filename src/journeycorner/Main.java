@@ -13,9 +13,9 @@ import java.util.stream.Stream;
 
 public class Main {
 
-    private static String INPUT_FILE = "C:\\Users\\Florian Reisecker\\Downloads\\input.csv";
-    private static String OUTPUT_FILE = "C:\\Users\\Florian Reisecker\\Downloads\\output.csv";
-    private static Map<YearMonth, Double> resultMap = new HashMap<>();
+    private final static String INPUT_FILE = "C:\\Users\\Florian Reisecker\\Downloads\\input.csv";
+    private final static String OUTPUT_FILE = "C:\\Users\\Florian Reisecker\\Downloads\\output.csv";
+    private final static Map<YearMonth, Double> resultMap = new HashMap<>();
 
     public static void main(String[] args) throws IOException {
         readFile();
@@ -39,13 +39,13 @@ public class Main {
             stream
 //                    .filter(line -> line.contains("foo") || line.contains("bar"))
                     .forEach(line ->
-            {
-                String[] lineArray = line.split(";");
-                YearMonth yearMonth = YearMonth.from(LocalDate.parse(lineArray[3], DateTimeFormatter.ofPattern("dd.MM.yyyy")));
-                Double newValue = Double.valueOf(lineArray[4].replace(".","").replace(',','.'));
-                Double oldValue = resultMap.get(yearMonth);
-                resultMap.put(yearMonth, oldValue == null ? newValue : oldValue + newValue);
-            });
+                    {
+                        String[] lineArray = line.split(";");
+                        YearMonth yearMonth = YearMonth.from(LocalDate.parse(lineArray[3], DateTimeFormatter.ofPattern("dd.MM.yyyy")));
+                        Double newValue = Double.valueOf(lineArray[4].replace(".", "").replace(',', '.'));
+                        Double oldValue = resultMap.get(yearMonth);
+                        resultMap.put(yearMonth, oldValue == null ? newValue : oldValue + newValue);
+                    });
         }
     }
 }
